@@ -1,30 +1,30 @@
-# ¸ÅÊö
-[VKProxy](https://github.com/fs7744/VKProxy) ÊÇÊ¹ÓÃc#¿ª·¢µÄ»ùÓÚ [Kestrel](https://github.com/dotnet/aspnetcore/tree/main/src/Servers/Kestrel) ÊµÏÖ L4/L7µÄ´úÀí
+# æ¦‚è¿°
+[VKProxy](https://github.com/fs7744/VKProxy) æ˜¯ä½¿ç”¨c#å¼€å‘çš„åŸºäº [Kestrel](https://github.com/dotnet/aspnetcore/tree/main/src/Servers/Kestrel) å®ç° L4/L7çš„ä»£ç†
 
-## ÎªºÎ»ùÓÚ Kestrel
+## ä¸ºä½•åŸºäº Kestrel
 
-Ö÷ÒªÊÇhttp Ğ­ÒéµÄ´¦ÀíÊµÔÚÌ«¶àÁË£¬¹¤×÷Á¿¾Ş´ó£¬ËùÒÔÎªÁËÊ¡ÊÂ¾Í»ùÓÚ Kestrel ÁË
+ä¸»è¦æ˜¯http åè®®çš„å¤„ç†å®åœ¨å¤ªå¤šäº†ï¼Œå·¥ä½œé‡å·¨å¤§ï¼Œæ‰€ä»¥ä¸ºäº†çœäº‹å°±åŸºäº Kestrel äº†
 
-²»¹ıÖÚËùÖÜÖª Kestrel ÊÇ Aspnetcore ÎªÁË¿çÆ½Ì¨¶øÊµÏÖµÄweb server£¬Ö»Ìá¹© http 1/2/3 µÄ L7²ãµÄÄÜÁ¦
+ä¸è¿‡ä¼—æ‰€å‘¨çŸ¥ Kestrel æ˜¯ Aspnetcore ä¸ºäº†è·¨å¹³å°è€Œå®ç°çš„web serverï¼Œåªæä¾› http 1/2/3 çš„ L7å±‚çš„èƒ½åŠ›
 
-µ«¿´¹ıÔ´ÂëµÄÍ¬Ñ§¶¼ÖªµÀ£¬ÆäÊµÆä±¾Éí´ÓL4²ã(socket)ÊµÏÖµÄHttpĞ­Òé´¦Àí£¬Ö»ÊÇ[OnBind](https://github.com/dotnet/aspnetcore/blob/main/src/Servers/Kestrel/Core/src/Internal/KestrelServerImpl.cs#L137)Ö»ÓĞhttpÏà¹ØÊµÏÖÒÔ¼°Ã»ÓĞÌá¹©Ïà¹Ø¹«¿ªÀ©Õ¹µÄapi£¬ËùÒÔÏŞÖÆÁËÆäÄÜÁ¦
+ä½†çœ‹è¿‡æºç çš„åŒå­¦éƒ½çŸ¥é“ï¼Œå…¶å®å…¶æœ¬èº«ä»L4å±‚(socket)å®ç°çš„Httpåè®®å¤„ç†ï¼Œåªæ˜¯[OnBind](https://github.com/dotnet/aspnetcore/blob/main/src/Servers/Kestrel/Core/src/Internal/KestrelServerImpl.cs#L137)åªæœ‰httpç›¸å…³å®ç°ä»¥åŠæ²¡æœ‰æä¾›ç›¸å…³å…¬å¼€æ‰©å±•çš„apiï¼Œæ‰€ä»¥é™åˆ¶äº†å…¶èƒ½åŠ›
 
-µ«ÊÇ¼ÈÈ»´úÂëÊÇ¿ªÔ´µÄ£¬²¢ÇÒÎÒÃÇÒ²ÖªµÀdotnetÓĞËäÈ»Âé·³µ«ÊÇÄÜ¿çÔ½·ÃÎÊÏŞÖÆµÄÄÜÁ¦£¨Reflection£©£¬ËùÒÔËüÊÇ²»ÄÜ×èµ²ÎÒÃÇµÄÄ§×¦
+ä½†æ˜¯æ—¢ç„¶ä»£ç æ˜¯å¼€æºçš„ï¼Œå¹¶ä¸”æˆ‘ä»¬ä¹ŸçŸ¥é“dotnetæœ‰è™½ç„¶éº»çƒ¦ä½†æ˜¯èƒ½è·¨è¶Šè®¿é—®é™åˆ¶çš„èƒ½åŠ›ï¼ˆReflectionï¼‰ï¼Œæ‰€ä»¥å®ƒæ˜¯ä¸èƒ½é˜»æŒ¡æˆ‘ä»¬çš„é­”çˆª
 
-£¨ps 
-     1. ²»¹ıÕâÑùÈÆ¹ıÏŞÖÆ¿ÉÄÜ»áÔÚ[Native AOT](https://learn.microsoft.com/zh-cn/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8)Ïà¹Ø³¡¾°´æÔÚÎÊÌâ£¬Ä¿Ç°ÔİÊ±Ã»ÓĞ×ö¾ßÌåÏà¹Ø²âÊÔ
-     2. ÔÚ²»Í¬°æ±¾Kestrel ¿ÉÄÜ»á´æÔÚapi±ä¶¯£¬Ä¿Ç°ÎªÁËÊ¡ÊÂ£¬²»ÊÊÅä¸÷°æ±¾²îÒì£¬ÔİÊ±ÒÔnet9.0Îª×¼£¬net10ÕıÊ½·¢²¼ºóÇ¨ÒÆÉı¼¶µ½net10£¬´Ëºó²»ÔÙÊÊÅänet9.0Ö®Ç°°æ±¾
- £©
+ï¼ˆps 
+     1. ä¸è¿‡è¿™æ ·ç»•è¿‡é™åˆ¶å¯èƒ½ä¼šåœ¨[Native AOT](https://learn.microsoft.com/zh-cn/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8)ç›¸å…³åœºæ™¯å­˜åœ¨é—®é¢˜ï¼Œç›®å‰æš‚æ—¶æ²¡æœ‰åšå…·ä½“ç›¸å…³æµ‹è¯•
+     2. åœ¨ä¸åŒç‰ˆæœ¬Kestrel å¯èƒ½ä¼šå­˜åœ¨apiå˜åŠ¨ï¼Œç›®å‰ä¸ºäº†çœäº‹ï¼Œä¸é€‚é…å„ç‰ˆæœ¬å·®å¼‚ï¼Œæš‚æ—¶ä»¥net9.0ä¸ºå‡†ï¼Œnet10æ­£å¼å‘å¸ƒåè¿ç§»å‡çº§åˆ°net10ï¼Œæ­¤åä¸å†é€‚é…net9.0ä¹‹å‰ç‰ˆæœ¬
+ ï¼‰
 
-### ¾ÖÏŞ
+### å±€é™
 
-²»µÃ²»ÏÈÌáÒ»¸ö¾ÖÏŞ£¬dotnet µÄsocket Ã»ÓĞÌá¹©Í³Ò»µÄ¿ç½ø³Ìsocket×ªÒÆapi£¬ÒòÎªdotnetÊÇ¿çÆ½Ì¨µÄ£¬²»Í¬ÏµÍ³´æÔÚ²îÒì£¬¸Ãissue [Migrate Socket between processes](https://github.com/dotnet/runtime/issues/48637) ÒÑ¾­¶àÄêÃ»ÓĞÏÂÎÄÁË
+ä¸å¾—ä¸å…ˆæä¸€ä¸ªå±€é™ï¼Œdotnet çš„socket æ²¡æœ‰æä¾›ç»Ÿä¸€çš„è·¨è¿›ç¨‹socketè½¬ç§»apiï¼Œå› ä¸ºdotnetæ˜¯è·¨å¹³å°çš„ï¼Œä¸åŒç³»ç»Ÿå­˜åœ¨å·®å¼‚ï¼Œè¯¥issue [Migrate Socket between processes](https://github.com/dotnet/runtime/issues/48637) å·²ç»å¤šå¹´æ²¡æœ‰ä¸‹æ–‡äº†
 
-ËùÒÔ²»ºÃ×öµ½ÈÈÖØÆô£¬ÔİÊ±²»»áÖ§³Ö
+æ‰€ä»¥ä¸å¥½åšåˆ°çƒ­é‡å¯ï¼Œæš‚æ—¶ä¸ä¼šæ”¯æŒ
 
-²»¹ıÄÚ²¿ÓĞÖ§³Ö¼àÌıÅäÖÃ±ä¶¯£¬½øĞĞÏà¹Ø¼àÌı¶Ë¿Ú±ä¶¯´¦ÀíµÈ£¬ËùÒÔ´ó²¿·Ö³¡¾°Ó¦¸ÃÃ»ÓĞÌ«´óÎÊÌâ£¬Ö»ÊÇÎŞ·¨±£³ÖtcpÁ¬½ÓÇ¨ÒÆ
+ä¸è¿‡å†…éƒ¨æœ‰æ”¯æŒç›‘å¬é…ç½®å˜åŠ¨ï¼Œè¿›è¡Œç›¸å…³ç›‘å¬ç«¯å£å˜åŠ¨å¤„ç†ç­‰ï¼Œæ‰€ä»¥å¤§éƒ¨åˆ†åœºæ™¯åº”è¯¥æ²¡æœ‰å¤ªå¤§é—®é¢˜ï¼Œåªæ˜¯æ— æ³•ä¿æŒtcpè¿æ¥è¿ç§»
 
-# ¹¦ÄÜ
+# åŠŸèƒ½
 
 
 - [X] TCP proxy

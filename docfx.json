@@ -25,8 +25,8 @@
     ],
     "globalMetadata": {
       "_appName": "VKProxy",
-      "_appLogoPath": "/images/logo.jpg",
-      "_appFaviconPath": "/images/favicon.ico",
+      "_appLogoPath": "https://fs7744.github.io/VKProxy.Doc/images/logo.jpg",
+      "_appFaviconPath": "https://fs7744.github.io/VKProxy.Doc/images/favicon.ico",
       "_appTitle": "VKProxy",
       "_appFooter": "<a href=\"https://github.com/fs7744/VKProxy\">VKProxy</a> © Victor.X.Qu",
       "_enableSearch": true,

@@ -2,3 +2,18 @@
   href: introduction.md
 - name: 入门
   href: getting-started.md
+- name: 在`appsettings.json`中配置
+  href: file-config.md
+  items: 
+    - name: listen
+      href: file-config/listen.md
+    - name: Routes
+      href: file-config/route.md
+    - name: Clusters
+      href: file-config/cluster.md
+    - name: Sni
+      href: file-config/sni.md
+    - name: 服务器参数
+      href: file-config/options.md
+- name: 通过UI站点配置
+  href: ui-config.md

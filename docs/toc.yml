@@ -22,3 +22,5 @@
         href: file-config/ServerOptions.md
 - name: 通过UI站点配置
   href: ui-config.md
+- name: 定制化扩展
+  href: extensibility.md

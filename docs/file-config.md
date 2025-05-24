@@ -4,11 +4,11 @@ VKProxy 可以从 `IConfiguration` 实例加载配置。 默认情况下，配�
 
 其下可配置如下内容
 
-- [ReverseProxyOptions](/docs/file-config/options) 路由相关参数
-- [Listen](/docs/file-config/listen)  监听配置
-- [Routes](/docs/file-config/route)  路由配置
-- [Clusters](/docs/file-config/cluster)  负载均衡配置
-- [Sni](/docs/file-config/sni)  证书相关配置
+- [ReverseProxyOptions](/VKProxy.Doc/docs/file-config/options) 路由相关参数
+- [Listen](/VKProxy.Doc/docs/file-config/listen)  监听配置
+- [Routes](/VKProxy.Doc/docs/file-config/route)  路由配置
+- [Clusters](/VKProxy.Doc/docs/file-config/cluster)  负载均衡配置
+- [Sni](/VKProxy.Doc/docs/file-config/sni)  证书相关配置
 
 
 ### 修改默认配置项
@@ -32,5 +32,5 @@ var app = Host.CreateDefaultBuilder(args)
     .Build();
 ```
 
-`ReverseProxyOptions` 还可以配置相关项以调整程序性能，具体可参见[服务器参数](/docs/file-config/options)
+`ReverseProxyOptions` 还可以配置相关项以调整程序性能，具体可参见[服务器参数](/VKProxy.Doc/docs/file-config/options)
 

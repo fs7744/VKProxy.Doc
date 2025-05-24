@@ -34,7 +34,7 @@ await app.RunAsync();
 
 假如使用 `appsettings.json` 进行配置, 这里列举一个http1的代理配置
 
-(配置项很多，可参考后续[具体配置项说明](/docs/file-config)， 也可以考虑使用 [UI配置站点](/docs/ui-config))
+(配置项很多，可参考后续[具体配置项说明](/VKProxy.Doc/docs/file-config)， 也可以考虑使用 [UI配置站点](/VKProxy.Doc/docs/ui-config))
 
 ``` json
 {

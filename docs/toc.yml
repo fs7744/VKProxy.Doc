@@ -15,5 +15,10 @@
       href: file-config/sni.md
     - name: 服务器参数
       href: file-config/options.md
+      items:
+      - name: ReverseProxyOptions
+        href: file-config/ReverseProxyOptions.md
+      - name: ServerOptions
+        href: file-config/ServerOptions.md
 - name: 通过UI站点配置
   href: ui-config.md

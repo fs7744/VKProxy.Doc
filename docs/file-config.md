@@ -4,7 +4,7 @@ VKProxy 可以从 `IConfiguration` 实例加载配置。 默认情况下，配�
 
 其下可配置如下内容
 
-- [ReverseProxyOptions](/VKProxy.Doc/docs/file-config/options) 路由相关参数
+- [ReverseProxyOptions](/VKProxy.Doc/docs/file-config/ReverseProxyOptions) 路由相关参数
 - [Listen](/VKProxy.Doc/docs/file-config/listen)  监听配置
 - [Routes](/VKProxy.Doc/docs/file-config/route)  路由配置
 - [Clusters](/VKProxy.Doc/docs/file-config/cluster)  负载均衡配置

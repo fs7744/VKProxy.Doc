@@ -20,6 +20,12 @@
         href: file-config/ReverseProxyOptions.md
       - name: ServerOptions
         href: file-config/ServerOptions.md
+      - name: SocketTransportOptions
+        href: file-config/SocketTransportOptions.md
+      - name: UdpSocketTransportOptions
+        href: file-config/UdpSocketTransportOptions.md
+      - name: QuicTransportOptions
+        href: file-config/QuicTransportOptions.md
 - name: 通过UI站点配置
   href: ui-config.md
 - name: 定制化扩展

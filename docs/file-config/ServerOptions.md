@@ -1,6 +1,8 @@
 # ServerOptions
 
-# [appsettings.json](#tab/ServerOptions-json)
+[Kestrel](https://github.com/dotnet/aspnetcore/tree/main/src/Servers/Kestrel) 内部对于http处理的配置 
+
+# [appsettings.json](#tab/json)
 
 通过`appsettings.json`配置
 
@@ -12,7 +14,7 @@
 }
 ```
 
-# [code](#tab/ServerOptions-code)
+# [code](#tab/code)
 
 通过`代码`配置
 

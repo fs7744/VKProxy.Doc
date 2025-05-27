@@ -2,6 +2,11 @@
   href: introduction.md
 - name: 入门
   href: getting-started.md
+  items:
+  - name: 安装
+    href: install.md
+  - name: 不同监听场景如何配置
+    href: howtolisten.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

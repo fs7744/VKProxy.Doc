@@ -361,8 +361,8 @@
       // Listen id : httpTest
       "httpTest": {
         "Protocols": [
-          "HTTP1","HTTP2"
-        ], // 协议选择 HTTP1 HTTP2
+          "HTTP1","HTTP2", "HTTP3"
+        ], // 协议选择 HTTP1 HTTP2 HTTP3
         "Address": [
           "127.0.0.1:5000"
         ], // 监听地址

@@ -249,7 +249,7 @@
         "Match": {
           "Hosts": [ "*com" ], // 匹配 host 为 com 结尾的
           "Paths": [ "/ws*" ], // url 匹配 /ws 开头的
-          "Statement": "Method = 'GET'" // http method 匹配 GET， 这里提供 类似 sql 中 where 的简单
+          "Statement": "Method = 'GET'" // http method 匹配 GET， 这里提供 类似 sql 中 where 的简单表达式写法，当然有一些限制，请参见 Statement 说明
         },
         "ClusterId": "httpTestCluster", // 目的地址 id
         "Timeout": "00:00:11" // 超时时间 11 秒， 
@@ -305,7 +305,7 @@
         "Match": {
           "Hosts": [ "*com" ], // 匹配 host 为 com 结尾的
           "Paths": [ "/ws*" ], // url 匹配 /ws 开头的
-          "Statement": "Method = 'GET'" // http method 匹配 GET， 这里提供 类似 sql 中 where 的简单
+          "Statement": "Method = 'GET'" // http method 匹配 GET， 这里提供 类似 sql 中 where 的简单表达式写法，当然有一些限制，请参见 Statement 说明
         },
         "ClusterId": "httpTestCluster", // 目的地址 id
         "Timeout": "00:00:11" // 超时时间 11 秒， 
@@ -377,7 +377,7 @@
         "Match": {
           "Hosts": [ "*com" ], // 匹配 host 为 com 结尾的
           "Paths": [ "/ws*" ], // url 匹配 /ws 开头的
-          "Statement": "Method = 'GET'" // http method 匹配 GET， 这里提供 类似 sql 中 where 的简单
+          "Statement": "Method = 'GET'" // http method 匹配 GET， 这里提供 类似 sql 中 where 的简单表达式写法，当然有一些限制，请参见 Statement 说明
         },
         "ClusterId": "httpTestCluster", // 目的地址 id
         "Timeout": "00:00:11" // 超时时间 11 秒， 

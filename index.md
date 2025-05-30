@@ -3,7 +3,7 @@
 
 ## 为何基于 Kestrel
 
-主要是http 协议的处理实在太多了，工作量巨大，所以为了省事就基于 Kestrel 了
+主要是http 协议的处理实在太多了，工作量巨大，所以为了省事就基于 Kestrel 了 (http 很多代理处理同样参考了很多 [Yarp](https://github.com/dotnet/yarp))
 
 不过众所周知 Kestrel 是 Aspnetcore 为了跨平台而实现的web server，只提供 http 1/2/3 的 L7层的能力
 

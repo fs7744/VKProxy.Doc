@@ -39,3 +39,6 @@
   href: ui-config.md
 - name: 定制化扩展
   href: extensibility.md
+  items:
+    - name: 如何扩展负载均衡策略
+    - href: extensibility/loadbalancingpolicy.md

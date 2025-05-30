@@ -101,3 +101,13 @@ listen 有以下配置项
     - HTTP3
 
         必须为有效值， 因为目前 quic 底层实现限制， 无法在运行时动态切换证书，必须在建立时明确证书
+
+    具体 Sni 配置可参见[Sni](/VKProxy.Doc/docs/file-config/sni)
+
+- `RouteId`
+
+    路由配置对应 id
+
+    当使用 L4 （非 tcp sni ）代理时，需要直接明确代理到哪一个目的地址，所以必须配置 RouteId，
+
+    其他 http 和 tcp sni 代理场景不必指定

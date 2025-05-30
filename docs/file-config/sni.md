@@ -80,7 +80,7 @@ SNI 有以下配置项
 
     证书源
 
-    （一些测试证书如何传教可参考 [在 PowerShell 中创建证书](https://learn.microsoft.com/zh-cn/aspnet/core/security/authentication/certauth?view=aspnetcore-9.0#create-certificates-in-powershell) [生成并导出证书 - Linux - OpenSSL](https://learn.microsoft.com/zh-cn/azure/vpn-gateway/point-to-site-certificates-linux-openssl)）
+    （一些测试证书如何生成可参考 [在 PowerShell 中创建证书](https://learn.microsoft.com/zh-cn/aspnet/core/security/authentication/certauth?view=aspnetcore-9.0#create-certificates-in-powershell) [生成并导出证书 - Linux - OpenSSL](https://learn.microsoft.com/zh-cn/azure/vpn-gateway/point-to-site-certificates-linux-openssl)）
 
     可以将证书节点配置为从多个源加载证书：
 

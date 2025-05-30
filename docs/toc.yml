@@ -7,10 +7,14 @@
     href: install.md
   - name: 不同监听场景如何配置
     href: howtolisten.md
+  - name: 如何为HTTP配置路由复杂匹配
+    href: statement.md
+  - name: 如何为HTTP配置请求和响应转换
+    href: transforms.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 
-    - name: listen
+    - name: Listen
       href: file-config/listen.md
     - name: Routes
       href: file-config/route.md

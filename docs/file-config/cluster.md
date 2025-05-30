@@ -198,7 +198,7 @@ Cluster 有以下配置项
 
     - `SslProtocols`
 
-         在给定 HTTP 客户端上启用的 SSL 协议。 协议名称指定为字符串数组。 默认值为 None
+         在给定 HTTP 客户端上启用的 [SSL 协议](https://learn.microsoft.com/zh-cn/dotnet/api/system.security.authentication.sslprotocols?view=net-9.0)。 协议名称指定为字符串数组。 默认值为 None
 
     - `DangerousAcceptAnyServerCertificate`
 

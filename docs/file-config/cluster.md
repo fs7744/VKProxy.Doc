@@ -191,3 +191,94 @@ Cluster 有以下配置项
         - `FailureRateLimit` 
         
             未在群集元数据上设置时应用的标记为运行不正常的目标的默认故障率限制。 该值在 (0,1)范围内。 默认值为 0.3（30%）。 
+
+- `HttpClientConfig`
+
+    每个 集群 都有一个专用 HttpMessageInvoker 实例，用于将请求转发到其 目标。也便于每个集群能配置一些独有的配置， 如下
+
+    - `SslProtocols`
+
+         在给定 HTTP 客户端上启用的 SSL 协议。 协议名称指定为字符串数组。 默认值为 None
+
+    - `DangerousAcceptAnyServerCertificate`
+
+        指示客户端是否检查了服务器 SSL 证书的有效性。 将其设置为 true 完全禁用验证。 默认值为 false。
+
+    - `MaxConnectionsPerServer`
+
+        同时对同一服务器开放的最大 HTTP 1.1 连接数
+
+    - `EnableMultipleHttp2Connections`
+
+        当所有现有连接上达到最大并发流数时，启用与同一服务器的附加 HTTP/2 连接。 默认值为 true
+
+    - `EnableMultipleHttp3Connections`
+
+        当所有现有连接上达到最大并发流数时，启用与同一服务器的附加 HTTP/3 连接。
+
+    - `AllowAutoRedirect`
+
+        指示处理程序是否应跟随重定向响应。
+
+        如果 AllowAutoRedirect 设置为 false，则 HTTP 状态代码为 300 到 399 的所有 HTTP 响应将返回到应用程序。
+
+    - `WebProxy`
+
+        允许通过出站 HTTP 代理发送请求以访问目标。 有关详细信息，请参阅 [SocketsHttpHandler.Proxy](https://learn.microsoft.com/zh-cn/dotnet/api/system.net.http.socketshttphandler.proxy)。(net9.0 已经支持 socks5 代理)
+
+        - `Address`
+
+            出站代理的 URL 地址。
+
+        - `BypassOnLocal`
+
+            指示对本地地址的请求是否应绕过出站代理的布尔值。
+
+        - `UseDefaultCredentials`
+
+             一个布尔值，指示当前应用程序凭据是否应用于对出站代理进行身份验证。 在出站请求中，ASP.NET Core 不会模拟经过身份验证的用户。
+
+
+    - `RequestHeaderEncoding`
+
+        为传出请求标头启用 ASCII 编码以外的其他功能。该值由 [Encoding.GetEncoding](https://learn.microsoft.com/zh-cn/dotnet/api/system.text.encoding.getencoding?view=net-9.0#System_Text_Encoding_GetEncoding_System_String_)进行解析，可以使用例如：“utf-8”、“iso-8859-1”等值。
+
+    - `ResponseHeaderEncoding`
+
+        启用非 ASCII 编码以处理传入的响应标头（来自代理将转发的请求）。该值由 [Encoding.GetEncoding](https://learn.microsoft.com/zh-cn/dotnet/api/system.text.encoding.getencoding?view=net-9.0#System_Text_Encoding_GetEncoding_System_String_)进行解析，可以使用例如：“utf-8”、“iso-8859-1”等值。
+
+- `HttpRequest`
+
+    还可以对转发的代理请求做一些版本之类控制
+
+    - `ActivityTimeout`
+
+        允许请求在任何操作完成之间保持空闲的最长时间，超过此时间后请求将被取消。 默认值为 100 秒。 收到响应标头或成功读取或写入任何请求、响应或流数据（如 gRPC 或 WebSocket）后，超时将重置。 TCP 保持连接和 HTTP/2 协议 ping 将不会重置超时，但 WebSocket ping 将会重置超时。
+    - `Version`
+
+        传出请求版本。 目前支持的值为 1.0、1.1、2 和 3。 默认值为 2。
+    - `VersionPolicy`
+
+        指定选择和协商请求的 HTTP 版本的行为。 请参阅 [HttpRequestMessage.VersionPolicy](https://learn.microsoft.com/zh-cn/dotnet/api/system.net.http.httpversionpolicy?view=net-9.0)。 默认值为 RequestVersionOrLower。 如下列举其所支持的内容
+
+        - `RequestVersionOrLower`
+
+            使用请求的版本或降级到较低的版本。
+
+            如果服务器支持请求的版本（通过 ALPN (H2) 进行协商或通过 Alt-Svc (H3) 播发），并且请求了安全连接，则结果为 Version。 否则，版本会降级到 HTTP/1.1。 此选项不允许使用预先协商的明文连接，例如，H2C。
+
+        - `RequestVersionOrHigher`
+
+            使用最高的可用版本，只会降级到请求的版本，而不会降级到更低版本。
+
+            如果服务器支持的版本高于请求的版本（通过 ALPN (H2) 进行协商或通过 Alt-Svc (H3) 播发），并且请求了安全连接，则结果为可用的最高版本。 否则，版本会降级到 Version。 此选项允许对请求的版本使用预先协商的明文连接，不适用于更高版本。
+
+        - `RequestVersionExact`
+
+            仅使用请求的版本。
+
+            此选项允许对请求的版本使用预先协商的明文连接。
+
+    - `AllowResponseBuffering`
+
+        如果托管的服务器支持，则允许在将响应发送回客户端时使用写入缓冲。 注意：启用它可能会破坏 SSE（服务器端事件）场景。

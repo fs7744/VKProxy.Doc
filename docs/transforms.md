@@ -619,3 +619,326 @@ RFC 允许 By 和 For 字段 [的各种格式](https://datatracker.ietf.org/doc/
 暂未支持
 
 ---
+
+## 响应转换
+
+默认情况下，所有响应标头和尾部都从代理响应复制到传出客户端响应。 响应和响应尾部转换可以指定它们是只应用于成功的响应还是应用于所有响应。
+
+### ResponseHeadersCopy
+
+此设置用于确定是否将所有代理响应标头复制到客户端响应。 此设置默认处于启用状态，可以通过配置变换为 false 值来禁用此设置。 即使禁用了此功能，引用特定标头的转换仍将运行。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseHeadersCopy | true/false |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseHeadersCopy-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseHeadersCopy": "false"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseHeadersCopy-R-ui)
+
+暂未支持
+
+---
+
+### ResponseHeader
+
+这会设置或追加命名响应标头的值。 Set 替换任何现有标头。 Append 会添加具有给定值的额外标头。 注意：不建议将“”设置为标头值，并可能导致未定义的行为。
+
+When 指定是否应在所有响应、成功响应或失败响应中包含响应头。 任何状态代码小于 400 的响应都被视为成功。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseHeader | 标头名称 |
+| Set/Append | 标头值 |
+| When | Success/Failure/Always |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseHeader-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseHeader": "HeaderName",
+            "Append": "value",
+            "When": "Success"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseHeader-R-ui)
+
+暂未支持
+
+---
+
+### ResponseHeaderRemove
+
+这会删除命名的响应标头。
+
+When 指定是否应针对所有响应、成功或失败响应删除响应标头。 任何状态代码小于 400 的响应都被视为成功。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseHeaderRemove | 标头名称 |
+| When | Success/Failure/Always |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseHeaderRemove-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseHeaderRemove": "HeaderName",
+            "When": "Success"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseHeaderRemove-R-ui)
+
+暂未支持
+
+---
+
+### ResponseHeadersAllowed
+
+默认从代理响应复制大多数响应标头（请参阅 ResponseHeadersCopy）。 某些安全模型仅允许代理特定标头。 此转换将禁用 ResponseHeadersCopy，并且仅复制给定标头。 如果未包含在允许列表中，则修改或追加到现有标头的其他转换可能会受到影响。
+
+请注意，默认情况下，某些标头不会复制，因为它们特定于连接或其他安全敏感（例如Connection）。 Alt-Svc 将这些标头名称放在允许列表中将绕过该限制，但强烈建议不要这样做，因为它可能会对代理的功能产生负面影响或导致安全漏洞。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseHeadersAllowed | 以分号分隔的允许标头名称列表。 |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseHeadersAllowed-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseHeadersAllowed": "Header1;header2"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseHeadersAllowed-R-ui)
+
+暂未支持
+
+---
+
+### ResponseTrailersCopy
+
+此选项设置是否将所有代理响应尾部复制到客户端响应。 此设置默认处于启用状态，可以通过配置变换为 false 值来禁用此设置。 即使禁用了此功能，引用特定标头的转换仍将运行。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseTrailersCopy | true/false |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseTrailersCopy-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseTrailersCopy": "Header1;header2"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseTrailersCopy-R-ui)
+
+暂未支持
+
+---
+### ResponseTrailer
+
+添加或替换尾随响应标头
+
+响应尾部是在响应正文末尾发送的标头。 对预告片的支持在 HTTP/1.1 实现中并不常见，但在 HTTP/2 实现中很常见。 检查客户端和服务器是否支持。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseTrailer | 标头名称 |
+| Set/Append | 标头值 |
+| When | Success/Failure/Always |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseTrailer-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseTrailer": "HeaderName",
+            "Append": "value",
+            "When": "Success"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseTrailer-R-ui)
+
+暂未支持
+
+---
+
+### ResponseTrailerRemove
+
+删除尾随响应标头
+
+When 指定是否应针对所有响应、成功或失败响应删除响应标头。 任何状态代码小于 400 的响应都被视为成功。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseTrailerRemove | 标头名称 |
+| When | Success/Failure/Always |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseTrailerRemove-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseTrailerRemove": "HeaderName",
+            "When": "Success"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseTrailerRemove-R-ui)
+
+暂未支持
+
+---
+
+### ResponseTrailersAllowed
+
+默认从代理响应复制大多数响应预告片（请参阅 ResponseTrailersCopy）。 某些安全模型仅允许代理特定标头。 此转换将禁用 ResponseTrailersCopy，并且仅复制给定标头。 如果未包含在允许列表中，则修改或追加到现有标头的其他转换可能会受到影响。
+
+请注意，默认情况下，某些标头不会复制，因为它们特定于连接或其他安全敏感（例如Connection）。 Alt-Svc 将这些标头名称放在允许列表中将绕过该限制，但强烈建议不要这样做，因为它可能会对代理的功能产生负面影响或导致安全漏洞。
+
+
+| Key | Memo |
+| -- | -- |
+| ResponseTrailersAllowed | 以分号分隔的允许标头名称列表。 |
+
+
+
+示例：
+
+# [appsettings.json](#tab/ResponseTrailersAllowed-R-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "ResponseTrailersAllowed": "Header1;header2"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/ResponseTrailersAllowed-R-ui)
+
+暂未支持
+
+---

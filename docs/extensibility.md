@@ -15,4 +15,19 @@
 
 具体可参考[ASP.NET Core 中间件](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0)
 
+KVProxy 添加了 udp 和 tcp 的特殊中间件
+
+具体参见[如何通过中间件定制化功能](/VKProxy.Doc/docs/extensibility/middleware)
+
+还有一个socks5的示例以供大家参考[如何利用中间件扩展实现socks5](/VKProxy.Doc/docs/extensibility/socks5)
+
 ## 特定功能策略增加
+
+有些特定功能策略比较难以直接使用中间件扩展，这里列举主要部分 
+
+（其实由于基于依赖注入，天生解耦，所以内部实现基本都可以覆盖或者添加新实现）
+
+- [如何扩展服务发现](/VKProxy.Doc/docs/extensibility/destinationresolver)
+- [如何扩展负载均衡策略](/VKProxy.Doc/docs/extensibility/loadbalancingpolicy)
+- [如何扩展主动健康检查策略](/VKProxy.Doc/docs/extensibility/activehealthchecker)
+- [如何扩展HTTP转换器](/VKProxy.Doc/docs/extensibility/transform)

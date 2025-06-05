@@ -33,3 +33,77 @@ KVProxy 添加了 udp 和 tcp 的特殊中间件
 - [如何扩展负载均衡策略](/VKProxy.Doc/docs/extensibility/loadbalancingpolicy)
 - [如何扩展主动健康检查策略](/VKProxy.Doc/docs/extensibility/activehealthchecker)
 - [如何扩展HTTP转换器](/VKProxy.Doc/docs/extensibility/transform)
+
+
+## ReverseProxyFeature
+
+除了两大扩展方式之外，还有一个接口数据在运行时有表明当前路由匹配情况
+
+``` csharp
+public interface IReverseProxyFeature  // http 路由会使用该接口
+{
+    public RouteConfig Route { get; set; } // 匹配上的路由，如为 null 则未匹配任何路由
+    public DestinationState? SelectedDestination { get; set; } // 在选中健康的目标地址后，对应配置会设置在这里
+}
+
+public interface IL4ReverseProxyFeature : IReverseProxyFeature // tcp / udp 路由会使用该接口
+{
+    public bool IsDone { get; set; }  // 表明是否已经处理，当为 true 时，KVProxy 内置L4代理将不会进行代理
+    public bool IsSni { get; set; }   // 表明是否为 tcp sni 代理模式
+    public SniConfig? SelectedSni { get; set; }  // 为 tcp sni 代理模式时的配置
+}
+```
+
+运行时可通过 feature 获取， 比如
+
+``` csharp
+// http
+internal class EchoHttpMiddleware : IMiddleware
+{
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    {
+        var f = context.Features.Get<IReverseProxyFeature>();
+    }
+}
+
+//tcp
+internal class EchoTcpProxyMiddleware : ITcpProxyMiddleware
+{
+    public Task InitAsync(ConnectionContext context, CancellationToken token, TcpDelegate next)
+    {
+        var f = context.Features.Get<IL4ReverseProxyFeature>();
+    }
+
+    public Task<ReadOnlyMemory<byte>> OnRequestAsync(ConnectionContext context, ReadOnlyMemory<byte> source, CancellationToken token, TcpProxyDelegate next)
+    {
+        var f = context.Features.Get<IL4ReverseProxyFeature>();
+    }
+
+    public Task<ReadOnlyMemory<byte>> OnResponseAsync(ConnectionContext context, ReadOnlyMemory<byte> source, CancellationToken token, TcpProxyDelegate next)
+    {
+        logger.LogInformation($"tcp {DateTime.Now} {context.Features.Get<IL4ReverseProxyFeature>()?.SelectedDestination?.EndPoint.ToString()} reponse size: {source.Length}");
+    }
+}
+
+//udp
+internal class EchoUdpProxyMiddleware : IUdpProxyMiddleware
+{
+    public Task InitAsync(UdpConnectionContext context, CancellationToken token, UdpDelegate next)
+    {
+        var f = context.Features.Get<IL4ReverseProxyFeature>();
+    }
+
+    public Task<ReadOnlyMemory<byte>> OnRequestAsync(UdpConnectionContext context, ReadOnlyMemory<byte> source, CancellationToken token, UdpProxyDelegate next)
+    {
+        var f = context.Features.Get<IL4ReverseProxyFeature>();
+    }
+
+    public Task<ReadOnlyMemory<byte>> OnResponseAsync(UdpConnectionContext context, ReadOnlyMemory<byte> source, CancellationToken token, UdpProxyDelegate next)
+    {
+        logger.LogInformation($"udp {DateTime.Now} {context.Features.Get<IL4ReverseProxyFeature>()?.SelectedDestination?.EndPoint.ToString()} reponse size: {source.Length}");
+    }
+}
+```
+
+不建议大家直接修改 `IReverseProxyFeature` 的值，可能会破坏路由
+

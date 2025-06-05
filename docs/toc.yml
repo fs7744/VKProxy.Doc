@@ -52,3 +52,5 @@
       href: extensibility/activehealthchecker.md
     - name: 如何扩展HTTP转换器
       href: extensibility/transform.md
+    - name: 可扩展套接字应用程序框架
+      href: extensibility/socket.md

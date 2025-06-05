@@ -24,7 +24,7 @@
 
 不过内部有支持监听配置变动，进行相关监听端口变动处理等，所以大部分场景应该没有太大问题，只是无法保持tcp连接迁移
 
-# 功能
+## 代理功能
 
 
 - [X] TCP proxy
@@ -44,3 +44,13 @@
 - [X] socks5 UDP
 - [X] Http Active HealthCheck
 - [X] socks5(tcp) to websocket to socks5
+
+## 可扩展套接字应用程序框架
+
+除了代理功能外，由于通过反射释放了Kestrel的能力，你也可以把 VKProxy 当成可扩展套接字应用程序框架使用
+
+使用它轻松构建始终连接的套接字应用程序，而无需考虑如何使用套接字，如何维护套接字连接以及套接字如何工作。
+
+(在Kestrel基础上开发，理论可以帮大家节省一些比如直接使用socket要自己管理 socket之类的事情)
+
+具体可以参考[可扩展套接字应用程序框架](/VKProxy.Doc/docs/extensibility/socket)

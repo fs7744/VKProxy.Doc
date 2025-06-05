@@ -107,3 +107,12 @@ internal class EchoUdpProxyMiddleware : IUdpProxyMiddleware
 
 不建议大家直接修改 `IReverseProxyFeature` 的值，可能会破坏路由
 
+## 可扩展套接字应用程序框架
+
+除了代理功能外，由于通过反射释放了Kestrel的能力，你也可以把 VKProxy 当成可扩展套接字应用程序框架使用
+
+使用它轻松构建始终连接的套接字应用程序，而无需考虑如何使用套接字，如何维护套接字连接以及套接字如何工作。
+
+(在Kestrel基础上开发，理论可以帮大家节省一些比如直接socket要自己管理 socket之类的事情)
+
+具体可以参考[可扩展套接字应用程序框架](/VKProxy.Doc/docs/extensibility/socket)

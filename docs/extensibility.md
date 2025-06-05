@@ -13,7 +13,9 @@
 
 请求委托用于生成请求管道。 请求委托处理每个 HTTP/tcp/udp 请求。
 
-具体可参考[ASP.NET Core 中间件](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0)
+具体概念可参考[ASP.NET Core 中间件](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0)
+
+![](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/servers/yarp/media/yarp-pipeline.png?view=aspnetcore-9.0)
 
 KVProxy 添加了 udp 和 tcp 的特殊中间件
 

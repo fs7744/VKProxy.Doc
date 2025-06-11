@@ -357,6 +357,45 @@ X-Forwarded-Host: IncomingHost:5000
 
 ---
 
+### RequestHeader
+
+这会设置或追加命名标头的值。 Set 替换任何现有标头。 Append 会添加具有给定值的额外标头。 注意：不建议将“”设置为标头值，并可能导致未定义的行为。
+
+
+| Key | Memo |
+| -- | -- |
+| RequestHeader | 标头名称 |
+| Set/Append | 标头值 |
+
+
+
+示例：
+
+# [appsettings.json](#tab/RequestHeader-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "xxxRoute": {
+        "Transforms": [
+          {
+            "RequestHeader": "HeaderName",
+            "Append": "value"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+# [UI](#tab/RequestHeader-ui)
+
+暂未支持
+
+---
+
 ### RequestHeaderRemove
 
 删除请求标头

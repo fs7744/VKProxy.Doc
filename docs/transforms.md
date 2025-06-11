@@ -215,7 +215,6 @@ X-Forwarded-Host: IncomingHost:5000
 | Key | Memo |
 | -- | -- |
 | QueryRemoveParameter | 查询字符串参数的名称 |
-| Set/Append | 静态值 |
 
 
 

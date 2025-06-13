@@ -132,7 +132,145 @@ warn: VKProxy.Server.ReverseProxy[5]
 
 当大家基本代理功能足够时，简化大家使用成本/快速构建的默认已构建镜像
 
-目前暂不支持，因为本人还没时间搞到这一步
+所有的镜像可以在 [docker hub vkproxy agent](https://hub.docker.com/r/vkproxy/agent) 找到
+
+提供如下环境变量
+
+- VKPROXY_CONFIG
+  
+  json file config, like /xx/app.json
+
+  example `VKPROXY_CONFIG=/xx/app.json`
+- VKPROXY_SOCKS5
+
+  use simple socks5 support
+
+  example `VKPROXY_SOCKS5=true`
+
+- ETCD_CONNECTION_STRING
+
+  etcd address, like http://127.0.0.1:2379
+
+  example `ETCD_CONNECTION_STRING=http://127.0.0.1:2379`
+
+- ETCD_PREFIX
+
+  default is /ReverseProxy/
+
+  example `ETCD_PREFIX=/ReverseProxy/`
+
+- ETCD_DELAY
+  
+  delay change config when etcd change, default is 00:00:01
+
+  example `ETCD_DELAY=00:00:01`
+
+#### 如果使用json文件配置
+
+配置项很多，可参考后续[具体配置项说明](/VKProxy.Doc/docs/file-config)
+
+这里举个例子 
+
+创建json文件
+
+``` json
+{
+  "ReverseProxy": {
+    "Listen": {
+      "http": {
+        "Protocols": [
+          "Http1"
+        ],
+        "Address": [
+          "127.0.0.1:5001"
+        ]
+      }
+    },
+    "Routes": {
+      "HTTPTEST": {
+        "Match": {
+          "Hosts": [
+            "*com"
+          ],
+          "Paths": [
+            "/ws*"
+          ],
+          "Statement": "Method = 'GET'"
+        },
+        "ClusterId": "apidemo",
+        "Timeout": "00:10:11"
+      }
+    },
+    "Clusters": {
+      "apidemo": {
+        "LoadBalancingPolicy": "RoundRobin",
+        "HealthCheck": {
+          "Active": {
+            "Enable": true,
+            "Policy": "Http",
+            "Path": "/test",
+            "Query": "?a=d",
+            "Method": "post"
+          }
+        },
+        "Destinations": [
+          {
+            "Address": "http://127.0.0.1:1104"
+          },
+          {
+            "Address": "https://google.com"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+然后启动
+
+``` shell
+docker run --rm -v /mnt/d/code/test/proxy:/config -e VKPROXY_CONFIG=/config/config
+.json -e ETCD_CONNECTION_STRING= --network host a.newegg.org/docker-hub-remote/vkproxy/agent:0.0.0.6
+
+// 启动后会看到类似如下的内容
+info: VKProxy.Server.ReverseProxy[3]
+      Listening on: [Key: http,Protocols: HTTP1,EndPoint: 127.0.0.1:5001]
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /app
+warn: VKProxy.Server.ReverseProxy[5]
+      Active health failed, can not connect socket [2404:6800:4012:7::200e]:443 Network is unreachable ([2404:6800:4012:7::200e]:443).
+warn: VKProxy.Server.ReverseProxy[5]
+      Active health failed, can not connect socket 127.0.0.1:1104 Connection refused (127.0.0.1:1104).
+```
+
+#### 使用 etcd 配置
+
+在多实例的情况，同一份配置分发就比较麻烦， 这里提供 ui 可以配置etcd + agent 从etcd读取配置 方便大家使用
+
+ui使用可以参考 [UI配置站点](/VKProxy.Doc/docs/ui-config)
+
+用 docker 启动 agent 可以这样使用
+
+``` shell
+docker run --rm -e ETCD_CONNECTION_STRING=http://127.0.0.1:2379 --network host vkproxy/agent:0.0.0.6
+
+// 启动后会看到类似如下的内容
+info: VKProxy.Server.ReverseProxy[3]
+      Listening on: [Key: http,Protocols: HTTP1,EndPoint: 127.0.0.1:5001]
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\code\test\proxy
+warn: VKProxy.Server.ReverseProxy[5]
+      Active health failed, can not connect socket 127.0.0.1:1104 No connection could be made because the target machine actively refused it. (127.0.0.1:1104).
+```
 
 
 # [自行构建](#tab/build)

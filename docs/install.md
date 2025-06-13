@@ -127,7 +127,6 @@ warn: VKProxy.Server.ReverseProxy[5]
       Active health failed, can not connect socket 127.0.0.1:1104 No connection could be made because the target machine actively refused it. (127.0.0.1:1104).
 ```
 
----
 
 # [Docker](#tab/Docker)
 
@@ -135,7 +134,6 @@ warn: VKProxy.Server.ReverseProxy[5]
 
 目前暂不支持，因为本人还没时间搞到这一步
 
----
 
 # [自行构建](#tab/build)
 

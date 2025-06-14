@@ -361,7 +361,14 @@
 
 # [UI](#tab/https-ui)
 
-暂未支持
+
+监听 127.0.0.1:5000
+
+![listen-http-sni.jpg](/VKProxy.Doc/images/listen-http-sni.jpg)
+
+创建路由
+
+![listen-http-route.jpg](/VKProxy.Doc/images/listen-http-route.jpg)
 
 ---
 
@@ -433,7 +440,15 @@
 
 # [UI](#tab/http3-ui)
 
-暂未支持
+
+
+监听 127.0.0.1:5000
+
+![listen-http3.jpg](/VKProxy.Doc/images/listen-http3.jpg)
+
+创建路由
+
+![listen-http-route.jpg](/VKProxy.Doc/images/listen-http-route.jpg)
 
 ---
 
@@ -507,6 +522,11 @@ PS: 如使用与 HTTP/1.1 兼容的 gRPC 的替代线路格式 gRPC-Web。 则�
 
 # [UI](#tab/gRPC-ui)
 
-暂未支持
+监听 127.0.0.1:5000
 
+![listen-http-grpc.jpg](/VKProxy.Doc/images/listen-http-grpc.jpg)
+
+创建路由
+
+![listen-http-grpc-route.jpg](/VKProxy.Doc/images/listen-http-grpc-route.jpg)
 ---

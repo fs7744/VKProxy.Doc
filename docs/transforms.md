@@ -93,10 +93,6 @@ X-Forwarded-Host: IncomingHost:5000
 }
 ```
 
-# [UI](#tab/PathPrefix-ui)
-
-暂未支持
-
 ---
 
 ### PathRemovePrefix
@@ -127,10 +123,6 @@ X-Forwarded-Host: IncomingHost:5000
 }
 ```
 
-# [UI](#tab/PathRemovePrefix-ui)
-
-暂未支持
-
 ---
 
 ### PathSet
@@ -160,10 +152,6 @@ X-Forwarded-Host: IncomingHost:5000
   }
 }
 ```
-
-# [UI](#tab/PathSet-ui)
-
-暂未支持
 
 ---
 
@@ -200,10 +188,6 @@ X-Forwarded-Host: IncomingHost:5000
 }
 ```
 
-# [UI](#tab/QueryValueParameter-ui)
-
-暂未支持
-
 ---
 
 
@@ -237,10 +221,6 @@ X-Forwarded-Host: IncomingHost:5000
   }
 }
 ```
-
-# [UI](#tab/QueryRemoveParameter-ui)
-
-暂未支持
 
 ---
 
@@ -277,10 +257,6 @@ X-Forwarded-Host: IncomingHost:5000
 }
 ```
 
-# [UI](#tab/HttpMethodChange-ui)
-
-暂未支持
-
 ---
 
 ### RequestHeadersCopy
@@ -314,10 +290,6 @@ X-Forwarded-Host: IncomingHost:5000
 }
 ```
 
-# [UI](#tab/RequestHeadersCopy-ui)
-
-暂未支持
-
 ---
 
 ### RequestHeaderOriginalHost
@@ -350,10 +322,6 @@ X-Forwarded-Host: IncomingHost:5000
   }
 }
 ```
-
-# [UI](#tab/RequestHeaderOriginalHost-ui)
-
-暂未支持
 
 ---
 
@@ -389,10 +357,6 @@ X-Forwarded-Host: IncomingHost:5000
   }
 }
 ```
-
-# [UI](#tab/RequestHeader-ui)
-
-暂未支持
 
 ---
 
@@ -436,10 +400,6 @@ AnotherHeader: AnotherValue
   }
 }
 ```
-
-# [UI](#tab/RequestHeaderRemove-ui)
-
-暂未支持
 
 ---
 
@@ -487,10 +447,6 @@ header2: value2
   }
 }
 ```
-
-# [UI](#tab/RequestHeadersAllowed-ui)
-
-暂未支持
 
 ---
 
@@ -547,10 +503,6 @@ Prefix 指定要用于每个标头的标头名称前缀。 使用默认X-Forward
   }
 }
 ```
-
-# [UI](#tab/X-Forwarded-ui)
-
-暂未支持
 
 ---
 
@@ -609,10 +561,6 @@ RFC 允许 By 和 For 字段 [的各种格式](https://datatracker.ietf.org/doc/
 }
 ```
 
-# [UI](#tab/Forwarded-ui)
-
-暂未支持
-
 ---
 
 ### ClientCert
@@ -652,10 +600,6 @@ RFC 允许 By 和 For 字段 [的各种格式](https://datatracker.ietf.org/doc/
 }
 ```
 
-# [UI](#tab/ClientCert-ui)
-
-暂未支持
-
 ---
 
 ## 响应转换
@@ -692,10 +636,6 @@ RFC 允许 By 和 For 字段 [的各种格式](https://datatracker.ietf.org/doc/
   }
 }
 ```
-
-# [UI](#tab/ResponseHeadersCopy-R-ui)
-
-暂未支持
 
 ---
 
@@ -736,10 +676,6 @@ When 指定是否应在所有响应、成功响应或失败响应中包含响应
 }
 ```
 
-# [UI](#tab/ResponseHeader-R-ui)
-
-暂未支持
-
 ---
 
 ### ResponseHeaderRemove
@@ -777,10 +713,6 @@ When 指定是否应针对所有响应、成功或失败响应删除响应标头
 }
 ```
 
-# [UI](#tab/ResponseHeaderRemove-R-ui)
-
-暂未支持
-
 ---
 
 ### ResponseHeadersAllowed
@@ -816,10 +748,6 @@ When 指定是否应针对所有响应、成功或失败响应删除响应标头
 }
 ```
 
-# [UI](#tab/ResponseHeadersAllowed-R-ui)
-
-暂未支持
-
 ---
 
 ### ResponseTrailersCopy
@@ -852,10 +780,6 @@ When 指定是否应针对所有响应、成功或失败响应删除响应标头
   }
 }
 ```
-
-# [UI](#tab/ResponseTrailersCopy-R-ui)
-
-暂未支持
 
 ---
 ### ResponseTrailer
@@ -895,10 +819,6 @@ When 指定是否应针对所有响应、成功或失败响应删除响应标头
 }
 ```
 
-# [UI](#tab/ResponseTrailer-R-ui)
-
-暂未支持
-
 ---
 
 ### ResponseTrailerRemove
@@ -936,10 +856,6 @@ When 指定是否应针对所有响应、成功或失败响应删除响应标头
 }
 ```
 
-# [UI](#tab/ResponseTrailerRemove-R-ui)
-
-暂未支持
-
 ---
 
 ### ResponseTrailersAllowed
@@ -974,9 +890,5 @@ When 指定是否应针对所有响应、成功或失败响应删除响应标头
   }
 }
 ```
-
-# [UI](#tab/ResponseTrailersAllowed-R-ui)
-
-暂未支持
 
 ---

@@ -271,7 +271,13 @@
 
 # [UI](#tab/http-ui)
 
-暂未支持
+监听 127.0.0.1:5000
+
+![listen-http.jpg](/VKProxy.Doc/images/listen-http.jpg)
+
+创建路由
+
+![listen-http-route.jpg](/VKProxy.Doc/images/listen-http-route.jpg)
 
 ---
 

@@ -119,6 +119,12 @@ SNI 有以下配置项
     
         是从中加载证书的存储位置。
 
+    比如你可以用 openssl 把 pfx 转换成 pem
+
+    ``` shell
+    openssl pkcs12 -in testCert.pfx -legacy -password pass:testPassword -out testCert.pem
+    ```
+
 - `RouteId`
 
     路由配置对应 id

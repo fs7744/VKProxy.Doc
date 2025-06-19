@@ -11,6 +11,8 @@
     href: statement.md
   - name: 如何为HTTP配置请求和响应转换
     href: transforms.md
+  - name: 如何设置速率限制
+    href: ratelimit.md
   - name: 如何利用中间件扩展实现socks5
     href: extensibility/socks5.md
 - name: 在`appsettings.json`中配置

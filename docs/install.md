@@ -231,7 +231,7 @@ warn: VKProxy.Server.ReverseProxy[5]
 
 ``` shell
 docker run --rm -v /mnt/d/code/test/proxy:/config -e VKPROXY_CONFIG=/config/config
-.json -e ETCD_CONNECTION_STRING= --network host a.newegg.org/docker-hub-remote/vkproxy/agent:0.0.0.6
+.json -e ETCD_CONNECTION_STRING= --network host a.newegg.org/docker-hub-remote/vkproxy/agent:0.0.0.7
 
 // 启动后会看到类似如下的内容
 info: VKProxy.Server.ReverseProxy[3]
@@ -257,7 +257,7 @@ ui使用可以参考 [UI配置站点](/VKProxy.Doc/docs/ui-config)
 用 docker 启动 agent 可以这样使用
 
 ``` shell
-docker run --rm -e ETCD_CONNECTION_STRING=http://127.0.0.1:2379 --network host vkproxy/agent:0.0.0.6
+docker run --rm -e ETCD_CONNECTION_STRING=http://127.0.0.1:2379 --network host vkproxy/agent:0.0.0.7
 
 // 启动后会看到类似如下的内容
 info: VKProxy.Server.ReverseProxy[3]

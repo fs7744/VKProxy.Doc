@@ -55,7 +55,7 @@ UI docker 部署
 举例：
 
 ``` shell
-docker run --rm -e ETCD_CONNECTION_STRING=http://127.0.0.1:2379 -e ASPNETCORE_URLS=http://*:8770 --network host vkproxy/ui:0.0.0.7
+docker run --rm -e ETCD_CONNECTION_STRING=http://127.0.0.1:2379 -e ASPNETCORE_URLS=http://*:8770 --network host vkproxy/ui:0.0.0.9
 
 // 启动后会看到类似输出
 warn: Microsoft.AspNetCore.Hosting.Diagnostics[15]

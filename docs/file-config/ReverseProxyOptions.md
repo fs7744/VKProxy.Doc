@@ -156,7 +156,7 @@
 
             令牌桶限流器与滑动窗口限制器类似，但是它并不重新添加来自过期段的请求，而是在每个补充周期内一次性补充固定数量的令牌。 每个段添加的令牌数不能使可用令牌数超过令牌桶限制。 下表显示了一个令牌桶限制器，其中令牌数限制为 100 个，补充期为 10 秒。
 
-            此策略有效参数有 `TokenLimit` / `QueueLimit`/ `Window` / `TokensPerPeriod`
+            此策略有效参数有 `PermitLimit` / `QueueLimit`/ `Window` / `TokensPerPeriod`
 
     - `PermitLimit`
 
@@ -173,10 +173,6 @@
     - `Window`
 
         指定补货之间的最短期限。TimeSpan 格式
-
-    - `TokenLimit`
-
-        存储桶中随时可以包含的最大令牌数。
     
     - `TokensPerPeriod`
 

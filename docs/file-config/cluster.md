@@ -108,6 +108,12 @@ Cluster 有以下配置项
     - `LeastRequests`
     
         选择分配请求最少的目标。 这需要检查所有目标。
+        
+    - `Hash`
+    
+        通过hash实现的会话亲和性种机制，用于将有因果关系的请求序列绑定到在多个目标之间均衡负载时处理第一个请求的目标。 在序列中的大多数请求处理相同数据以及处理请求的不同节点（目标）的数据访问成本不同的情况下，它很有用。
+
+        使用时要求在 `Metadata` 中设置 `HashBy` (header / cookie) 和 `Key`
 
     当上述内置策略不满足您时，您也可以自行编码扩展， 请参见 [如何扩展负载均衡策略](/VKProxy.Doc/docs/extensibility/loadbalancingpolicy)
 
@@ -282,3 +288,11 @@ Cluster 有以下配置项
     - `AllowResponseBuffering`
 
         如果托管的服务器支持，则允许在将响应发送回客户端时使用写入缓冲。 注意：启用它可能会破坏 SSE（服务器端事件）场景。
+
+- `Metadata`
+
+    Dictionary<string, string> 类型
+
+    可以配置用于自定义扩展场景时提供给配置用户的参数
+
+    比如使用`LoadBalancingPolicy = Hash`时要求在 `Metadata` 中设置 `HashBy` (header / cookie) 和 `Key`

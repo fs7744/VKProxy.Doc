@@ -15,6 +15,8 @@
     href: ratelimit.md
   - name: 如何利用中间件扩展实现socks5
     href: extensibility/socks5.md
+  - name: A/B 测试和滚动升级
+    href: extensibility/ab.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

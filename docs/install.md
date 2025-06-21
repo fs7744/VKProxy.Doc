@@ -19,6 +19,7 @@ vkproxy -h
 --etcd              etcd address, like http://127.0.0.1:2379
 --etcd-prefix       default is /ReverseProxy/
 --etcd-delay        delay change config when etcd change, default is 00:00:01
+--sampler           log sampling, support trace/random/none
 --help (-h)         show all options
 View more at https://fs7744.github.io/VKProxy.Doc/docs/introduction.html
 ```
@@ -163,7 +164,9 @@ warn: VKProxy.Server.ReverseProxy[5]
   
   delay change config when etcd change, default is 00:00:01
 
-  example `ETCD_DELAY=00:00:01`
+- VKPROXY_SAMPLER
+  
+  log sampling, support trace/random/none
 
 #### 如果使用json文件配置
 
@@ -280,8 +283,7 @@ VKProxy 有很多扩展点可以定制化大家所需特制化需求，所以有
 #### 创建一个项目，然后选取所需package安装
 
 ``` shell
-dotnet add package VKProxy
-dotnet add package VKProxy.Storages.Etcd
+dotnet add package VKProxy.Host
 ```
 
 #### 配置程序
@@ -290,8 +292,7 @@ dotnet add package VKProxy.Storages.Etcd
 using Microsoft.Extensions.Hosting;
 using ProxyDemo;
 
-var app = Host.CreateDefaultBuilder(args)
-    .UseReverseProxy()
+var app = VKProxyHost.CreateBuilder()
     .ConfigureServices(i =>
     {
         // 默认加载appsettings.json 配置

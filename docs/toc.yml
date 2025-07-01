@@ -21,6 +21,8 @@
     href: extensibility/ab.md
   - name: 日志采样
     href: extensibility/log-sampling.md
+  - name: http响应缓存
+    href: extensibility/cache.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

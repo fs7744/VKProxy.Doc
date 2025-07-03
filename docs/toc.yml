@@ -23,6 +23,8 @@
     href: extensibility/log-sampling.md
   - name: http响应缓存
     href: extensibility/cache.md
+  - name: http响应压缩
+    href: extensibility/responsecompression.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

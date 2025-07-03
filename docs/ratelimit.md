@@ -194,3 +194,30 @@ VKProxy 也是基于其提供速率限制功能，不过相关实现都只是单
 ![limit-tokenbucket.jpg](/VKProxy.Doc/images/limit-tokenbucket.jpg)
 
 ---
+
+## `RedisConcurrency` 并发
+
+Redis版本并发限制器会限制并发请求数，主要表明大家可以利用扩展实现自己的并发机制。 每添加一个请求，在并发限制中减去 1。 一个请求完成时，在限制中增加 1。 其他请求限制器限制的是指定时间段的请求总数，而与它们不同，并发限制器仅限制并发请求数，不对一段时间内的请求数设置上限。
+
+配置举例
+
+# [appsettings.json](#tab/Concurrency-json)
+
+``` json
+{
+  "ReverseProxy": {
+    "Routes": {
+      // Routes id : httpTestRoute
+      "httpTestRoute": {
+        "Limit": {
+            "Policy": "Concurrency",
+            "By": "RedisConcurrency",      
+            "PermitLimit": 10,  // 在同时租用的最大许可证数。
+        },
+      }
+    }
+  }
+}
+```
+
+---

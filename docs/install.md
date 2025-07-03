@@ -14,13 +14,19 @@ dotnet tool install --global VKProxy.Cli
 ``` shell
 vkproxy -h
 // it will output
---config (-c)       json file config, like /xx/app.json
---socks5            use simple socks5 support
---etcd              etcd address, like http://127.0.0.1:2379
---etcd-prefix       default is /ReverseProxy/
---etcd-delay        delay change config when etcd change, default is 00:00:01
---sampler           log sampling, support trace/random/none
---help (-h)         show all options
+--config (-c)               json file config, like /xx/app.json
+--socks5                    use simple socks5 support
+--etcd                      etcd address, like http://127.0.0.1:2379
+--etcd-prefix               default is /ReverseProxy/
+--etcd-delay                delay change config when etcd change, default is 00:00:01
+--sampler                   log sampling, support trace/random/none
+--memory-cache-max          Memory Cache Size Limit
+--memory-cache-percentage   Memory Cache Compaction Percentage
+--redis                     StackExchangeRedis config
+--redis-pool-size           StackExchangeRedis pool size, default is 10
+--disk-cache                disk cache directory
+--disk-cache-max            disk cache Size Limit
+--help (-h)                 show all options
 View more at https://fs7744.github.io/VKProxy.Doc/docs/introduction.html
 ```
 
@@ -164,9 +170,29 @@ warn: VKProxy.Server.ReverseProxy[5]
   
   delay change config when etcd change, default is 00:00:01
 
-- VKPROXY_SAMPLER
+- VKPROXY_MEMORY_CACHE_MAX
   
-  log sampling, support trace/random/none
+  Memory Cache Size Limit
+
+- VKPROXY_MEMORY_CACHE_COMPACTION_PERCENTAGE
+  
+  Memory Cache Compaction Percentage
+
+- VKPROXY_REDIS_POOL_SIZE
+  
+  StackExchangeRedis pool size, default is 10
+
+- VKPROXY_REDIS
+  
+  StackExchangeRedis config
+
+- VKPROXY_DISK_CACHE
+  
+  disk cache directory
+
+- VKPROXY__DISK_CACHE_MAX
+  
+  disk cache Size Limit
 
 #### 如果使用json文件配置
 

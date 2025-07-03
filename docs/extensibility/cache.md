@@ -51,7 +51,19 @@
 
 - `Cache`
 
-    缓存方式， 内置暂时只有 Memory， 不过可以通过扩展接口扩展，然后大家在此设置
+    缓存方式， 内置缓存有 (还可以通过扩展接口扩展，然后大家在此设置)
+    
+    - `Memory`
+
+        基于 MemoryCache 实现
+
+    - `Disk`
+
+        缓存会实际存于磁盘物理文件
+
+    - `Redis`
+
+        启用 Redis 情况还可以缓存导redis中
 
 - `CacheWhen`
 
@@ -169,9 +181,9 @@ public interface IResponseCache
 {
     string Name { get; }
 
-    IResponseCacheEntry? Get(string key);
+    ValueTask<CachedResponse?> GetAsync(string key, CancellationToken cancellationToken);
 
-    void Set(string key, IResponseCacheEntry entry, TimeSpan validFor);
+    ValueTask SetAsync(string key, CachedResponse entry, TimeSpan validFor, CancellationToken cancellationToken);
 }
 ```
 

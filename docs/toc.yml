@@ -25,6 +25,8 @@
     href: extensibility/cache.md
   - name: http响应压缩
     href: extensibility/responsecompression.md
+  - name: http流量镜像
+    href: extensibility/mirror.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

@@ -24,6 +24,7 @@ vkproxy -h
 --memory-cache-percentage   Memory Cache Compaction Percentage
 --redis                     StackExchangeRedis config
 --redis-pool-size           StackExchangeRedis pool size, default is 10
+--redis-data-protection     DataProtection sotre in redis key
 --disk-cache                disk cache directory
 --disk-cache-max            disk cache Size Limit
 --help (-h)                 show all options
@@ -186,11 +187,15 @@ warn: VKProxy.Server.ReverseProxy[5]
   
   StackExchangeRedis config
 
+- VKPROXY_REDIS_DATA_PROTECTION
+  
+  DataProtection sotre in redis key
+
 - VKPROXY_DISK_CACHE
   
   disk cache directory
 
-- VKPROXY__DISK_CACHE_MAX
+- VKPROXY_DISK_CACHE_MAX
   
   disk cache Size Limit
 

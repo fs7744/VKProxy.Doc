@@ -31,6 +31,8 @@
     href: extensibility/sessionaffinity.md
   - name: 禁止http
     href: extensibility/onlyhttps.md
+  - name: 静态内容
+    href: extensibility/content.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

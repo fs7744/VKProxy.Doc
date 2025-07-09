@@ -29,6 +29,8 @@
     href: extensibility/mirror.md
   - name: 会话亲和性
     href: extensibility/sessionaffinity.md
+  - name: 禁止http
+    href: extensibility/onlyhttps.md
 - name: 在`appsettings.json`中配置
   href: file-config.md
   items: 

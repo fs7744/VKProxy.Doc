@@ -86,6 +86,20 @@ http 路由匹配规则可以配置 `Hosts` / `Paths` / `Methods`
 
     获取或设置窗体形式的请求正文。
 
+动态集合字段还可以传递特殊的`[Key]`, 可以用简单的waf匹配 （不过只支持 `=`/ `!=`/ `~=` 三种操作符）
+
+- `#Keys`
+
+    任意一个 key匹配， 比如header 中就是 header Name， 像 `User-Agent: PostmanRuntime/7.44.1` 就会用 `User-Agent`匹配
+
+- `#Values`
+
+    任意一个 值匹配， 比如header 中就是 header Value, 像 `User-Agent: PostmanRuntime/7.44.1` 就会用 `PostmanRuntime/7.44.1`匹配
+
+- `#KVS`
+
+    任意一个 key 或者 值匹配， 比如header 中就是 header Value, 像 `User-Agent: PostmanRuntime/7.44.1` 就会用 `User-Agent`和`PostmanRuntime/7.44.1`来分别匹配
+
 ### 比较操作符
 
 - `=`  

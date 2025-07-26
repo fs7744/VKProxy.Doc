@@ -14,21 +14,41 @@ dotnet tool install --global VKProxy.Cli
 ``` shell
 vkproxy -h
 // it will output
---config (-c)               json file config, like /xx/app.json
---socks5                    use simple socks5 support
---etcd                      etcd address, like http://127.0.0.1:2379
---etcd-prefix               default is /ReverseProxy/
---etcd-delay                delay change config when etcd change, default is 00:00:01
---sampler                   log sampling, support trace/random/none
---memory-cache-max          Memory Cache Size Limit
---memory-cache-percentage   Memory Cache Compaction Percentage
---redis                     StackExchangeRedis config
---redis-pool-size           StackExchangeRedis pool size, default is 10
---redis-data-protection     DataProtection sotre in redis key
---disk-cache                disk cache directory
---disk-cache-max            disk cache Size Limit
---help (-h)                 show all options
-View more at https://fs7744.github.io/VKProxy.Doc/docs/introduction.html
+--help (-h)    show options, View more at https://fs7744.github.io/VKProxy.Doc/docs/introduction.html
+--version    VKProxy version
+proxy     L4/L7 proxy build on Kestrel
+     --help (-h)
+         show options
+     --config (-c,Environment:VKPROXY_CONFIG)
+         json file config, like /xx/app.json
+     --etcd (Environment:ETCD_CONNECTION_STRING)
+         etcd address, like http://127.0.0.1:2379
+     --etcd-prefix (Environment:ETCD_PREFIX)
+         default is /ReverseProxy/
+     --etcd-delay (Environment:ETCD_DELAY)
+         delay change config when etcd change, default is 00:00:01
+     --socks5 (Environment:VKPROXY_SOCKS5)
+         use simple socks5 support
+     --sampler (Environment:VKPROXY_SAMPLER)
+         log sampling, support trace/random/none
+     --memory-cache-max (Environment:VKPROXY_MEMORY_CACHE_MAX)
+         Memory Cache Size Limit
+     --memory-cache-percentage (Environment:VKPROXY_MEMORY_CACHE_COMPACTION_PERCENTAGE)
+         Memory Cache Compaction Percentage
+     --disk-cache (Environment:VKPROXY_DISK_CACHE)
+         disk cache directory
+     --disk-cache-max (Environment:VKPROXY_DISK_CACHE_MAX)
+         disk cache Size Limit
+     --redis (Environment:VKPROXY_REDIS)
+         StackExchangeRedis config
+     --redis-data-protection (Environment:VKPROXY_REDIS_DATA_PROTECTION)
+         DataProtection sotre in redis key
+     --redis-pool-size (Environment:VKPROXY_REDIS_POOL_SIZE)
+         StackExchangeRedis pool size, default is 10
+acme     cli tool to help you issues certificates through an automated API based on the ACME protocol.
+     terms     view current terms of service.
+     account     Manage ACME accounts.
+     order     Manage ACME orders.
 ```
 
 #### 如果使用json文件配置
@@ -96,7 +116,7 @@ View more at https://fs7744.github.io/VKProxy.Doc/docs/introduction.html
 然后启动
 
 ``` shell
-vkproxy -c D:\code\test\proxy\config.json
+vkproxy proxy -c D:\code\test\proxy\config.json
 
 // 启动后会看到类似如下的内容
 info: VKProxy.Server.ReverseProxy[3]
@@ -120,7 +140,7 @@ ui使用可以参考 [UI配置站点](/VKProxy.Doc/docs/ui-config)
 用tool 启动 agent 可以这样使用
 
 ``` shell
-vkproxy --etcd http://127.0.0.1:2379 --etcd-prefix /ReverseProxy/
+vkproxy proxy --etcd http://127.0.0.1:2379 --etcd-prefix /ReverseProxy/
 
 // 启动后会看到类似如下的内容
 info: VKProxy.Server.ReverseProxy[3]

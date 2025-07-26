@@ -58,7 +58,7 @@
 # [dotnet tool](#tab/tool)
 
 ``` shell
-vkproxy -c D:\code\test\proxy\config.json --sampler random
+vkproxy proxy -c D:\code\test\proxy\config.json --sampler random
 ```
 
 ---
@@ -74,7 +74,7 @@ vkproxy -c D:\code\test\proxy\config.json --sampler random
 # [dotnet tool](#tab/tool)
 
 ``` shell
-vkproxy -c D:\code\test\proxy\config.json --sampler trace
+vkproxy proxy -c D:\code\test\proxy\config.json --sampler trace
 ```
 
 ---

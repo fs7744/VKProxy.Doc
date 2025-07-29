@@ -364,4 +364,196 @@ curl --location 'https://localhost:443/WeatherForecast' \
 - 这样使用就会导致同一域名存在很多证书，一旦某一实例无法更新证书，实例就会产生问题，人工处理可能比较麻烦
 
 合理做法可以是有单独程序提供证书管理的功能，证书更新则可以在变更后由管理程序调用 代理程序api进行更新。
-后面有空会尝试一下
+
+## client with code
+
+当然除了上述使用方式，你还可以在代码中自行进行证书申请
+
+### 简化用法
+
+如果已经集成好完全的自动证书申请验证，就可以使用已经封装好的代码进行简单使用
+
+举例在asp.net core提供 一个api  可以根据参数申请证书
+
+starup
+``` csharp
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+builder.Services.AddAcmeChallengeCore(config: c =>
+{
+    c.HttpClientConfig = new VKProxy.Config.HttpClientConfig()
+    {
+        DangerousAcceptAnyServerCertificate = true
+    };
+});
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+```
+
+api
+``` csharp
+using Microsoft.AspNetCore.Mvc;
+using VKProxy.ACME.AspNetCore;
+using VKProxy.Core.Extensions;
+
+namespace WithApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CertController : ControllerBase
+{
+    private readonly IAcmeStateIniter initer;
+
+    public CertController(IAcmeStateIniter initer)
+    {
+        this.initer = initer;
+    }
+
+    [HttpGet]
+    public async Task<string> Get([FromQuery] string domain)
+    {
+        // 证书配置
+        var o = new AcmeChallengeOptions()
+        {
+            AllowedChallengeTypes = VKProxy.ACME.AspNetCore.ChallengeType.Http01,
+            Server = new Uri("https://127.0.0.1:14000/dir"),
+            DomainNames = new[] { domain },
+            AdditionalIssuers = new[] { """
+                        -----BEGIN CERTIFICATE-----
+                        MIIDGzCCAgOgAwIBAgIIUPFry5qBu34wDQYJKoZIhvcNAQELBQAwIDEeMBwGA1UE
+                        AxMVUGViYmxlIFJvb3QgQ0EgMjFjNjY3MCAXDTI1MDcyMjAxMTA0OVoYDzIwNTUw
+                        NzIyMDExMDQ5WjAgMR4wHAYDVQQDExVQZWJibGUgUm9vdCBDQSAyMWM2NjcwggEi
+                        MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCxNKa4y93OFYaSx8bcbuWsHHnW
+                        mpfsobK5Elf7GE02mi/cDrMP+wR1l53BuucrW04OyoewkBsJNZoxEy1DkCjxv4+g
+                        Q+HgGCR5R14ex17ZdFxpcl42H8QnRB3IqVBlJiz0JyGZwiaOamOkUTVEYTGDeuxu
+                        PglpvboGeatsWQe0MJJfBN8OxLVUmi6Y/enbzlIdv3tvgQujfPNiS8MLDMBuIiMs
+                        ixhu8YAzUqvVKZoQVK7GwbD9WrVBKub8w86StKFmU14aSXahidt8IENdpLO2OT3J
+                        y1nt25QDsAmtS1/wGnTDPeefLGsM7kGYNesQkSW0w8Um4p9KLWKnKyOvzPZrAgMB
+                        AAGjVzBVMA4GA1UdDwEB/wQEAwIChDATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNV
+                        HRMBAf8EBTADAQH/MB0GA1UdDgQWBBRoXcwo6c5J8jMweiHKPw4OlcWIQzANBgkq
+                        hkiG9w0BAQsFAAOCAQEAad9XT4sN1KserYtCxBKmoPhPAHInHYgG/Z2gd6KqdsK9
+                        biIgEbKo84tClLqA6XCN/yN1bMQL2ZMbWBF8oHv/A5o0atpTpd+Ho+punHYRIpqv
+                        akUX21Zsu6NdAuH7g7m9t9h/lc6tgiqaAf2HwpC3NrXmUlPRqLay7/t+BFQU6dBa
+                        E+qzmL7lHZQf1UArfb+QDYH2XsFCk9Pjv0xdP+PGwf8HqHhfPLctvus5JL+LXp0X
+                        68eWKQCs1CrL8cUMwcELlW/mR1lKnJL1WgM1Bns9ZF1ha6egG539ruzQjItF6MHB
+                        xAEt55nXfs+mjV1p7qrcmR8jIdByR9C36T21r+8pKA==
+                        -----END CERTIFICATE-----
+
+                        """
+            }
+        };
+
+        // 申请全新account 
+        o.NewAccount(new string[] { "mailto:test11@xxx.com" });
+        // 执行全套流程
+        var cert = await initer.CreateCertificateAsync(o);
+        return cert.ExportPem();
+    }
+}
+```
+
+默认情况下三种验证方式：
+
+#### http
+
+如在 asp.net core 中使用，默认已经添加了 `app.Map("/.well-known/acme-challenge"` 路由处理， 如要申请公网上权威认证的证书，请将 `/.well-known/acme-challenge` 路由暴露在公网让acme服务器可以访问
+
+其次由于默认实现没有持久化和分布式处理验证信息，重启和多实例都会有问题，如有需求可以替换`IHttpChallengeResponseStore`实现以达到效果
+
+``` csharp
+public interface IHttpChallengeResponseStore
+{
+    Task AddChallengeResponseAsync(string token, string keyAuth, CancellationToken cancellationToken);
+
+    Task<string> GetChallengeResponse(string token, CancellationToken cancellationToken);
+
+    Task RemoveChallengeResponseAsync(string token, CancellationToken cancellationToken);
+}
+```
+
+#### dns
+
+由于不同服务商有各自的api，所以默认没有实现，该功能其实无效，如需使用，请实现 `IDnsChallengeStore`
+
+``` csharp
+public interface IDnsChallengeStore
+{
+    Task AddTxtRecordAsync(string acmeDomain, string dnsTxt, CancellationToken cancellationToken);
+
+    Task RemoveTxtRecordAsync(string acmeDomain, string dnsTxt, CancellationToken cancellationToken);
+}
+```
+
+#### tls
+
+个人并不推荐使用tls验证方式，其由于验证自签证书和正式证书都会在 tls 层，运行时不停机重新申请对于tls管理还是有些挑战的
+
+如想尝试可以实现`ITlsAlpnChallengeStore` （默认在 asp.net core 的实现并不能支持过滤验证自签证书只用于acme服务器请求）
+
+``` csharp
+public interface ITlsAlpnChallengeStore
+{
+    Task AddChallengeAsync(string domainName, X509Certificate2 cert, CancellationToken cancellationToken);
+
+    Task RemoveChallengeAsync(string domainName, X509Certificate2 cert, CancellationToken cancellationToken);
+}
+```
+
+### 底层 client
+
+如需直接使用原始 acme 协议client，可参考如下
+
+starup
+``` csharp
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+
+builder.Services.AddACME(c =>
+{
+    c.HttpClientConfig = new VKProxy.Config.HttpClientConfig()
+    {
+        DangerousAcceptAnyServerCertificate = true
+    };
+});
+```
+
+use
+``` csharp
+var context = services.BuildServiceProvider().GetRequiredService<IAcmeContext>();
+
+await context.InitAsync(new Uri("https://127.0.0.1:14000/dir"), cancellationToken);
+
+var account = await context.NewAccountAsync(new string[] { "mailto:xxx@xxx.com" }, true, KeyAlgorithm.RS256.NewKey());
+
+var order = await context.NewOrderAsync(new string[] { "test.com" });
+var aus = order.GetAuthorizationsAsync().ToBlockingEnumerable().ToArray();
+var a = aus.First();
+var b = await a.HttpAsync();
+var c = await b.ValidateAsync();
+
+Key privateKey = KeyAlgorithm.RS256.NewKey();
+var csrInfo = new CsrInfo
+{
+    CommonName = "test.com",
+};
+order = await context.FinalizeAsync(csr, key, cancellationToken);
+var acmeCert = await order.DownloadAsync();
+
+var pfxBuilder = acmeCert.ToPfx(privateKey);
+if (!string.IsNullOrWhiteSpace(Args.AdditionalIssuer) && File.Exists(Args.AdditionalIssuer))
+{
+    pfxBuilder.AddIssuer(File.ReadAllBytes(Args.AdditionalIssuer));
+}
+var pfx = pfxBuilder.Build("HTTPS Cert - " + Args.Domain, string.Empty);
+var r = X509CertificateLoader.LoadPkcs12(pfx, string.Empty, X509KeyStorageFlags.Exportable);
+```

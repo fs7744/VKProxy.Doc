@@ -557,3 +557,11 @@ if (!string.IsNullOrWhiteSpace(Args.AdditionalIssuer) && File.Exists(Args.Additi
 var pfx = pfxBuilder.Build("HTTPS Cert - " + Args.Domain, string.Empty);
 var r = X509CertificateLoader.LoadPkcs12(pfx, string.Empty, X509KeyStorageFlags.Exportable);
 ```
+
+### ui
+
+在 管理站点的 ui sni 里面添加了 简单的 http 验证方式的acme证书界面配置 
+
+当然使用前提得是 暴露 xxx域名/.well-known/acme-challenge 接口到公网，这样公网acme 才能验证
+
+![acme.jpg](/VKProxy.Doc/images/acme.jpg)

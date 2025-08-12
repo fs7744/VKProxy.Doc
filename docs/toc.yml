@@ -35,6 +35,8 @@
     href: extensibility/content.md
   - name: 简单的waf
     href: extensibility/waf.md
+  - name: OpenTelemetry
+    href: extensibility/opentelemetry.md
   - name: ACME协议client
     href: extensibility/acme.md
 - name: 在`appsettings.json`中配置

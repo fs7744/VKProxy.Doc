@@ -273,3 +273,76 @@ internal class ListenHandler : ListenHandlerBase
 
 ## 在VKProxy中如何使用？
 
+默认情况，OpenTelemetry 已经启用，并且配置为 otlp 协议，大家只需配置otlp收集器，
+
+相关配置如下：
+
+| Environment variable	        | OtlpExporterOptions property         |
+| -- | -- |
+| OTEL_EXPORTER_OTLP_ENDPOINT	| Endpoint |  
+| OTEL_EXPORTER_OTLP_HEADERS	| Headers |
+| OTEL_EXPORTER_OTLP_TIMEOUT	| TimeoutMilliseconds |
+| OTEL_EXPORTER_OTLP_PROTOCOL	| Protocol (grpc or http/protobuf) |
+
+(更多详细配置参见[OpenTelemetry.Exporter.OpenTelemetryProtocol](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Exporter.OpenTelemetryProtocol))
+
+这里我们用 [Aspire 仪表盘](https://learn.microsoft.com/zh-cn/dotnet/aspire/fundamentals/dashboard/overview?WT.mc_id=dapine&tabs=bash)举例 
+
+因为它有个独立模式，只需启动一个镜像就可以尝试一下，当然真实产线还是需要配置其他存储等等
+
+``` bash
+docker run --rm -it -p 18888:18888 -p 4317:18889 -d --name aspire-dashboard \
+    mcr.microsoft.com/dotnet/aspire-dashboard:9.0
+```
+
+前面的 Docker 命令：
+
+- 从 mcr.microsoft.com/dotnet/aspire-dashboard:9.0 映像启动容器。
+- 公开两个端口的容器实例：
+    - 将仪表板的 OTLP 端口 18889 映射到主机的端口 4317。 端口 4317 从应用接收 OpenTelemetry 数据。 应用使用 OpenTelemetry 协议 （OTLP）发送数据。
+    - 将仪表板的端口 18888 映射到主机的端口 18888。 端口 18888 具有仪表板 UI。 导航到浏览器中 http://localhost:18888 以查看仪表板。
+
+``` bash
+// 设置收集器环境变量
+
+set OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4317/  
+
+// 启动vkproxy （具体配置可参见之前的性能测试 https://www.cnblogs.com/fs7744/p/18978275 ）
+
+vkproxy proxy -c D:\code\github\VKProxy\samples\CoreDemo\test.json
+```
+
+访问一下
+
+``` bash
+curl --location 'https://localhost:5001/WeatherForecast'
+```
+
+可以在 Aspire 中看到相关链路信息
+
+![tracing.jpg](/VKProxy.Doc/images/tracing.jpg)
+
+指标信息 
+
+![meters.jpg](/VKProxy.Doc/images/meters.jpg)
+
+日志信息
+
+![logs.jpg](/VKProxy.Doc/images/logs.jpg)
+
+当然你还可以通多如下命令调整过滤记录的信息
+
+``` bash
+     --telemetry (Environment:VKPROXY_TELEMETRY)
+         Allow export telemetry data (metrics, logs, and traces) to help you analyze your software’s performance and behavior.
+
+     --meter (Environment:VKPROXY_TELEMETRY_METER)
+         Subscribe meters, default is System.Runtime,Microsoft.AspNetCore.Server.Kestrel,Microsoft.AspNetCore.Server.Kestrel.Udp,Microsoft.AspNetCore.MemoryPool,VKProxy.ReverseProxy
+
+     --drop_instrument (Environment:VKPROXY_TELEMETRY_DROP_INSTRUMENT)
+         Drop instruments
+
+     --exporter (Environment:VKPROXY_TELEMETRY_EXPORTER)
+         How to export telemetry data (metrics, logs, and traces), support prometheus,console,otlp , default is otlp, please set env like `OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4317/`
+```
+
